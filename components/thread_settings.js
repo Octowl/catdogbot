@@ -18,6 +18,11 @@ module.exports = function(controller) {
           type: "postback",
           title: "dogs",
           payload: "dogs"
+        },
+        {
+          type: "postback",
+          title: "feedback",
+          payload: "feedback"
         }
       ]
     }
