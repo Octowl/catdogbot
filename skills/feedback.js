@@ -28,13 +28,25 @@ module.exports = function(controller) {
           "positive"
         );
 
+        convo.addMessage(
+          {
+            text: "Please choose one of the ratings.",
+            action: "default"
+          },
+          "badResponse"
+        );
+
         convo.addQuestion(
           {
             text: "How would you rate catdog bot on a scale of 1-5?",
             quick_replies: [...Array(5).keys()].map(buildQuickReplies)
           },
           function(response, convo) {
-            if (response.text > 2) convo.gotoThread("positive");
+            // The user didn't choose one of the quick replies
+            if (!response.quick_reply) convo.gotoThread("badResponse");
+            // The user gave a high rating
+            else if (response.text > 3) convo.gotoThread("positive");
+            // The user gave a bad rating
             else convo.gotoThread("negative");
           },
           { key: "rating" },
